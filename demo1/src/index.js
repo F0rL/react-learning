@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import './index.css'
+//评论组件案例
 
-class Header extends Component {
-  render() {
-    return (
-      <div>
-        <h1>React header</h1>
-      </div>
-    );
+import React, { Component} from "react";
+import ReactDOM from "react-dom";
+import "./demo4.css";
+
+
+
+class Container extends Component {
+  render () {
+    return <div className='container'>container</div>
   }
 }
 
-ReactDOM.render(<Header />, document.getElementById("root"));
+ReactDOM.render(<Container />, document.getElementById("root"));

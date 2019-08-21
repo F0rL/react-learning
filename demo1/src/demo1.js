@@ -1,3 +1,4 @@
+//了解react组件
 import React from "react";
 import ReactDOM from "react-dom";
 import App from './App'
