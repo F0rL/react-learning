@@ -1,0 +1,16 @@
+.comment_List {
+  margin-left: 20px;
+}
+
+.comment {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+.comment > .comment-user {
+  color: blue;
+}
+.comment > p {
+  flex: 1;
+}
