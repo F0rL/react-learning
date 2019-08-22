@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types'
 import "./commetInput.css";
 
 class CommentInput extends Component {
+  static propTypes = {
+    onSubmit: PropTypes.func
+  }
   constructor() {
     super();
     this.state = {
@@ -9,10 +13,30 @@ class CommentInput extends Component {
       content: ""
     };
   }
+  componentDidMount(){
+    this.textarea.focus()
+  }
+  componentWillMount(){
+    this._loadLocal()
+  }
   handleUsername(e) {
     this.setState({
       username: e.target.value
     });
+  }
+
+  _loadLocal () {
+    const username = localStorage.getItem('username')
+    if(username) {
+      this.setState({username})
+    }
+  }
+  _saveToLocal(username){
+    localStorage.setItem('username', username)
+  }
+
+  handleUsernameBlur(e) {
+    this._saveToLocal(e.target.value)
   }
   handleContent(e) {
     this.setState({
@@ -21,8 +45,11 @@ class CommentInput extends Component {
   }
   handleSubmit(){
     if(this.props.onSubmit) {
-      const {username, content} = this.state
-      this.props.onSubmit({username, content})
+      this.props.onSubmit({
+        username: this.state.username, 
+        content: this.state.content,
+        createdTime: +new Date()
+      })
     }
     this.setState({content: ''})
   }
@@ -35,6 +62,7 @@ class CommentInput extends Component {
             <input
               value={this.state.username}
               onChange={this.handleUsername.bind(this)}
+              onBlur={this.handleUsernameBlur.bind(this)}
             />
           </div>
         </div>
@@ -44,6 +72,7 @@ class CommentInput extends Component {
             <textarea
               value={this.state.content}
               onChange={this.handleContent.bind(this)}
+              ref={textarea => this.textarea = textarea}
             />
           </div>
         </div>

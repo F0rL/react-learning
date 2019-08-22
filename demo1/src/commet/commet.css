@@ -5,7 +5,9 @@
 .comment {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 16px;
+  margin-top: 20px;
 }
 
 .comment > .comment-user {
@@ -13,4 +15,20 @@
 }
 .comment > p {
   flex: 1;
+}
+
+.comment-delete {
+  margin-left: 10px;
+  background-color: #000;
+  color: #fff;
+  padding: 2px 4px;
+  visibility: hidden;
+}
+.comment:hover .comment-delete {
+  visibility: visible;
+  cursor: pointer;
+}
+
+code {
+  background-color: #ccc;
 }
