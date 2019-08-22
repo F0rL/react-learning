@@ -2,6 +2,6 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import CommetApp from './commet/CommetApp'
+import BasisApp from './basis/BasisApp'
 
-ReactDOM.render(<CommetApp />, document.getElementById("root"));
+ReactDOM.render(<BasisApp />, document.getElementById("root"));
