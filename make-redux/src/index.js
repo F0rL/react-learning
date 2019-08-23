@@ -1,82 +1,53 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-//import App from './App';
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
+import Header from './Header'
+import Content from './Content'
 
-const appState = {
-  title: {
-    text: "React.js redux",
-    color: "red"
-  },
-  content: {
-    text: "React.js content",
-    color: "blue"
+function createStore(reducer) {
+  let state = null
+  const listeners = []
+  const subscribe = (listener) => listeners.push(listener)
+  const getState = () => state
+  const dispatch = (action) => {
+    state = reducer(state, action)
+    listeners.forEach(listener => listener())
   }
-};
-//观察者模式
-function createStore(state, stateChanger) {
-  const listeners = [];
-  const subscribe = listener => listeners.push(listener);
-  const getState = () => state;
-  const dispatch = action => {
-    state = stateChanger(state, action); //覆盖原对象
-    listeners.forEach(listener => listener());
-  };
-  return { getState, dispatch, subscribe };
+  dispatch({})
+
+  return {getState, dispatch, subscribe}
 }
 
-function renderApp(newAppState, oldAppState = {}) {
-  if (newAppState === oldAppState) return;
-  console.log("render app...");
-  renderTitle(newAppState.title, oldAppState.title);
-  renderContent(newAppState.content, oldAppState.content);
-}
-
-function renderTitle(newTitle, oldTitle) {
-  if (newTitle === oldTitle) return; //数据不变就返回
-  console.log("render title...");
-  const titleDom = document.getElementById("title");
-  titleDom.innerHTML = newTitle.text;
-  titleDom.style.color = newTitle.color;
-}
-
-function renderContent(newContent, oldContent) {
-  if (newContent === oldContent) return; //数据不变就返回
-  console.log("render content...");
-  const contentDom = document.getElementById("content");
-  contentDom.innerHTML = newContent.text;
-  contentDom.style.color = newContent.color;
-}
-//专门负责修改
-function stateChanger(state, action) {
+const themeReducer = (state, action) => {
+  if(!state) return {
+    themeColor: 'red'
+  }
   switch (action.type) {
-    case "UPDATE_TITLE_TEXT":
-      return {
-        ...state,
-        title: {
-          text: action.text
-        }
-      };
-    case "UPDATE_TITLE_COLOR":
-      return {
-        ...state,
-        title: {
-          color: action.color
-        }
-      };
+    case 'CHANGE_COLOR':
+      return {...state, themeColor: action.themeColor}
     default:
-      return state;
+      return state
+  }
+}
+const store = createStore(themeReducer)
+
+class Index extends Component {
+  static childContextTypes = {
+    store: PropTypes.object
+  }
+
+  getChildContext(){
+    return {store}
+  }
+
+  render(){
+    return (
+      <div>
+        <Header/>
+        <Content/>
+      </div>
+    )
   }
 }
 
-const store = createStore(appState, stateChanger);
-let oldState = store.getState()
-store.subscribe(() => {
-  const newState = store.getState()
-  renderApp(newState, oldState)
-  oldState = newState
-});
-
-renderApp(store.getState());
-store.dispatch({ type: "UPDATE_TITLE_TEXT", text: "修改title text" }); // 修改标题文本
-store.dispatch({ type: 'UPDATE_TITLE_COLOR', color: 'green' }) // 修改标题颜色
+ReactDOM.render(<Index/>, document.getElementById('root'))
