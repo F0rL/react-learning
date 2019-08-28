@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#root {
+  width: 400px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.input input {
+  outline: none;
+  border: 1px solid #000;
+  border-radius: 2px;
+  font-size: 16px;
+  padding: 4px;
+  vertical-align:middle
+}
+
+.input button {
+  margin-left: 10px;
+  padding: 4px;
+  font-size: 14px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  outline: none;
+  vertical-align:middle
+}
+
+#root ul {
+  width: 100%;
+  list-style: none;
+}
+
+.todo_item {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+}
+.todo_item span:nth-child(2) {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.todo_item span:nth-child(3) {
+  font-size: 12px;
+  padding: 4px;
+  cursor: pointer;
+}
+
