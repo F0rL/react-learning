@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
 class TodoItem extends Component {
   constructor(props) {
@@ -10,12 +10,15 @@ class TodoItem extends Component {
     const { deleteItem, index } = this.props;
     deleteItem(index);
   }
+  //删除节点并没有动画效果
   render() {
     const { time, content } = this.props.item;
-    const { test } = this.props
+    const { test } = this.props;
     return (
       <li className="todo_item">
-        <span>{test}: {time}</span>
+        <span>
+          {test}: {time}
+        </span>
         <span>内容: {content}</span>
         <span onClick={this.handleDelete}>X</span>
       </li>
@@ -32,7 +35,7 @@ TodoItem.propTypes = {
 
 //默认值
 TodoItem.defaultProps = {
-  test: '年月日'
-}
+  test: "年月日"
+};
 
 export default TodoItem;

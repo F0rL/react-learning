@@ -30,15 +30,19 @@
   vertical-align:middle
 }
 
-#root ul {
+#root .todo_list {
   width: 100%;
   list-style: none;
+  margin-top: 20px;
 }
 
 .todo_item {
   display: flex;
   justify-content: space-between;
   padding-top: 8px;
+}
+.todo_item:hover span:nth-child(3) {
+  visibility: visible;
 }
 .todo_item span:nth-child(2) {
   flex: 1;
@@ -49,5 +53,22 @@
   font-size: 12px;
   padding: 4px;
   cursor: pointer;
+  visibility: hidden;
 }
 
+
+/* todo动画 */
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}

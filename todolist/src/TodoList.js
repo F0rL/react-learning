@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import TodoItem from "./TodoItem";
+import uuid from "uuid";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 class TodoList extends Component {
   constructor(props) {
@@ -7,10 +9,12 @@ class TodoList extends Component {
     this.state = {
       list: [
         {
+          id: uuid(),
           time: "19/09/01",
           content: "learn react"
         },
         {
+          id: uuid(),
           time: "19/09/01",
           content: "learn vue"
         }
@@ -23,7 +27,7 @@ class TodoList extends Component {
   }
   handleAddTodo() {
     let time = new Date().toLocaleDateString();
-    let newTodo = { time: time, content: this.state.inputValue };
+    let newTodo = { id: uuid(), time: time, content: this.state.inputValue };
     this.setState({
       list: [...this.state.list, newTodo],
       inputValue: ""
@@ -48,18 +52,24 @@ class TodoList extends Component {
           <input value={this.state.inputValue} onChange={this.handleValue} />
           <button onClick={this.handleAddTodo}>add todo</button>
         </div>
-        <ul>
+        <TransitionGroup className="todo_list">
           {this.state.list.map((item, index) => {
             return (
-              <TodoItem
-                deleteItem={this.deleteItem}
-                key={index}
-                item={item}
-                index={index}
-              />
+              <CSSTransition
+                key={item.id}
+                timeout={500}
+                classNames="fade"
+              >
+                <TodoItem
+                  deleteItem={this.deleteItem}
+                  key={item.id}
+                  item={item}
+                  index={index}
+                />
+              </CSSTransition>
             );
           })}
-        </ul>
+        </TransitionGroup>
       </React.Fragment>
     );
   }
