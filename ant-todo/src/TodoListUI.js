@@ -29,7 +29,7 @@ const TodoListUI = (props) => {
                 {item}
                 <Icon 
                   type="close" 
-                  onClick={(index)=>props.handleDelete(index)}
+                  onClick={()=>props.handleDelete(index)}
                 />
               </List.Item>
             )}
